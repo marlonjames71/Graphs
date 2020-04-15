@@ -44,30 +44,45 @@ class Graph:
         # Create a queue and enqueue starting vertex
         queue = Queue()
         queue.enqueue([starting_vertex])
+        
         # Create a set of traversed vertices
         visited = set()
+        # Creates a different path so we can compare lengths with path (line 55)
+        # The longest path will be set to ancestor path, which is the one we're looking for
         ancestor_path = [starting_vertex]
-        # while queue is not empty:
+        
+        # Only want to continue if the queue isn't empty
         while queue.size() > 0:
-            # dequeue/pop first vertex
+            # dequeue/pop first path
             path = queue.dequeue()
+            # Grab the last node from path
             node = path[-1]
-            # if not visited
+            
+            # Only if the node has not been visited:
             if node not in visited:
-                # DO THE THING
+                # DO THE THING -> comparing path lengths (we want the longest one)
                 if len(path) > len(ancestor_path):
                     ancestor_path = path
+                # If the lengths of both the path and ancestor path are the same, 
+                # then we compare the last element of each path, going with the smallest
                 elif len(path) == len(ancestor_path):
                     if path[-1] < ancestor_path[-1]:
                         ancestor_path = path
-                # Mark as visited
+                    # No else. If the last element of path is not smaller,
+                    # then the path aready asigned to ancestor_path stays the same
+                    
+                # Mark the node as visited
                 visited.add(node)
+                
                 # Enqueue all neighbors
                 for next_vert in self.get_neighbors(node):
                     new_path = list(path)
                     new_path.append(next_vert)
                     queue.enqueue(new_path)
-                    
+        
+        # per assignment requirements, we need to return the earliest ancestor
+        # If some paths don't have any more ancestors, we return -1, otherwise return
+        # the last element in ancestor_path
         if len(ancestor_path) == 1:
             return -1
         else:

@@ -1,21 +1,16 @@
 from queue import Queue
 from graph import Graph
 
-# test_ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
-
-    # '''
-    #    10
-    #  /
-    # 1   2   4  11
-    #  \ /   / \ /
-    #   3   5   8
-    #    \ / \   \
-    #     6   7   9
-    # '''
-
-def helperGraph(ancestors):
+# First we need to create a graph using the collection we're given
+def create_graph_from(ancestors):
+    # create a graph instance
     g = Graph()
     
+    # Loop through all pairs in ancestors
+    # Note: In the Graph class `add_vertex` checks...
+    # ..to make sure the vertex hasn't already been added yet.
+    # Then we add the edges (relationships)
+    # Lastly, we return the graph so we can traverse it.
     for pair in ancestors:
         parent = pair[0]
         child = pair[1]
@@ -28,12 +23,9 @@ def helperGraph(ancestors):
 
 
 def earliest_ancestor(ancestors, starting_node):
-    g = helperGraph(ancestors)
-    print(g.vertices)
+    # Create an instance of the new graph
+    g = create_graph_from(ancestors)
     
+    # We simply use our bft function which...
+    # ...will return the earliest ancestor or a -1
     return g.bft(starting_node)
-
-   
-    
-    
-    
