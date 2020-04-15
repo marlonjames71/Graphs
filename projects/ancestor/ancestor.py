@@ -31,17 +31,9 @@ def earliest_ancestor(ancestors, starting_node):
     g = helperGraph(ancestors)
     print(g.vertices)
     
-    queue = Queue()
-    queue.enqueue([starting_node])
-    
-    visited = set()
-    
-    revisited = g.bft(starting_node)
-    last = revisited[-1]
-    if last == starting_node:
-        return -1
-    else:
-        return last
+    return g.bft(starting_node)
+
+   
     
     
     

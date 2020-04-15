@@ -46,6 +46,7 @@ class Graph:
         queue.enqueue([starting_vertex])
         # Create a set of traversed vertices
         visited = set()
+        ancestor_path = [starting_vertex]
         # while queue is not empty:
         while queue.size() > 0:
             # dequeue/pop first vertex
@@ -54,7 +55,11 @@ class Graph:
             # if not visited
             if node not in visited:
                 # DO THE THING
-                print(node)
+                if len(path) > len(ancestor_path):
+                    ancestor_path = path
+                elif len(path) == len(ancestor_path):
+                    if path[-1] < ancestor_path[-1]:
+                        ancestor_path = path
                 # Mark as visited
                 visited.add(node)
                 # Enqueue all neighbors
@@ -62,6 +67,11 @@ class Graph:
                     new_path = list(path)
                     new_path.append(next_vert)
                     queue.enqueue(new_path)
+                    
+        if len(ancestor_path) == 1:
+            return -1
+        else:
+            return ancestor_path[-1]
 
     def dft(self, starting_vertex):
         """
